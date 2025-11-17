@@ -136,7 +136,7 @@ if st.session_state.running:
             break
 
     # Rerun the app after the loop to update the UI with new values
-    st.experimental_rerun()
+    st.rerun()
 else:
     # If not running, but simulation has ended (crash or win), show final stats/score.
     if not start_sim:
