@@ -14,7 +14,7 @@ const DIFFICULTY_SETTINGS = {
     cooling_factor: 1.2,
     compensation_factor: 1.2,
     thresholds: { HR_frac: 1.00, MAP: 55, Temp: 42.5, Hydration: 0.75 },
-    stabilization_time: 20
+    stabilization_time: 15
   },
   Medium: {
     age: 30,
@@ -26,7 +26,7 @@ const DIFFICULTY_SETTINGS = {
     cooling_factor: 1.0,
     compensation_factor: 1.0,
     thresholds: { HR_frac: 0.95, MAP: 60, Temp: 42.0, Hydration: 0.80 },
-    stabilization_time: 30
+    stabilization_time: 20
   },
   Hard: {
     age: 45,
@@ -38,7 +38,7 @@ const DIFFICULTY_SETTINGS = {
     cooling_factor: 0.8,
     compensation_factor: 0.8,
     thresholds: { HR_frac: 0.95, MAP: 60, Temp: 41.0, Hydration: 0.85 },
-    stabilization_time: 45
+    stabilization_time: 30
   }
 };
 
@@ -123,10 +123,10 @@ class PatientModel {
   }
 
   in_safe_range() {
-    if (this.hr > 0.85 * this.HR_max || this.hr < 50) return false;
-    if (this.map < 70 || this.map > 120) return false;
-    if (this.core_temp < 36.0 || this.core_temp > 38.5) return false;
-    if (this.hydration < 0.90) return false;
+    if (this.hr > 0.90 * this.HR_max || this.hr < 45) return false;
+    if (this.map < 65 || this.map > 130) return false;
+    if (this.core_temp < 35.5 || this.core_temp > 39.0) return false;
+    if (this.hydration < 0.85) return false;
     return true;
   }
 }
@@ -355,7 +355,7 @@ export default function PhysiologyGame() {
                   <Heart className="text-red-500" size={24} />
                   <span className="text-sm font-semibold text-gray-600">Heart Rate</span>
                 </div>
-                <p className={`text-2xl font-bold ${model.hr > 0.85 * model.HR_max ? 'text-red-600' : 'text-green-600'}`}>
+                <p className={`text-2xl font-bold ${model.hr > 0.90 * model.HR_max ? 'text-red-600' : 'text-green-600'}`}>
                   {model.hr.toFixed(0)} bpm
                 </p>
               </div>
@@ -365,7 +365,7 @@ export default function PhysiologyGame() {
                   <Activity className="text-blue-500" size={24} />
                   <span className="text-sm font-semibold text-gray-600">Blood Pressure</span>
                 </div>
-                <p className={`text-2xl font-bold ${model.map < 70 ? 'text-red-600' : 'text-green-600'}`}>
+                <p className={`text-2xl font-bold ${model.map < 65 ? 'text-red-600' : 'text-green-600'}`}>
                   {model.map.toFixed(0)} mmHg
                 </p>
               </div>
@@ -385,7 +385,7 @@ export default function PhysiologyGame() {
                   <Droplets className="text-cyan-500" size={24} />
                   <span className="text-sm font-semibold text-gray-600">Hydration</span>
                 </div>
-                <p className={`text-2xl font-bold ${model.hydration < 0.90 ? 'text-red-600' : 'text-green-600'}`}>
+                <p className={`text-2xl font-bold ${model.hydration < 0.85 ? 'text-red-600' : 'text-green-600'}`}>
                   {(model.hydration * 100).toFixed(0)}%
                 </p>
               </div>
@@ -397,9 +397,9 @@ export default function PhysiologyGame() {
                 <ResponsiveContainer width="100%" height={200}>
                   <LineChart data={history}>
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="time" />
-                    <YAxis domain={[40, model.HR_max + 20]} />
-                    <Tooltip />
+                    <XAxis dataKey="time" tickFormatter={(value) => Math.round(value)} />
+                    <YAxis domain={[40, model.HR_max + 20]} tickFormatter={(value) => Math.round(value)} />
+                    <Tooltip formatter={(value) => Math.round(value)} />
                     <ReferenceLine y={0.95 * model.HR_max} stroke="red" strokeDasharray="3 3" />
                     <Line type="monotone" dataKey="HR" stroke="#ef4444" dot={false} />
                   </LineChart>
@@ -411,9 +411,9 @@ export default function PhysiologyGame() {
                 <ResponsiveContainer width="100%" height={200}>
                   <LineChart data={history}>
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="time" />
-                    <YAxis domain={[40, 140]} />
-                    <Tooltip />
+                    <XAxis dataKey="time" tickFormatter={(value) => Math.round(value)} />
+                    <YAxis domain={[40, 140]} tickFormatter={(value) => Math.round(value)} />
+                    <Tooltip formatter={(value) => Math.round(value)} />
                     <ReferenceLine y={60} stroke="red" strokeDasharray="3 3" />
                     <Line type="monotone" dataKey="MAP" stroke="#3b82f6" dot={false} />
                   </LineChart>
@@ -425,9 +425,9 @@ export default function PhysiologyGame() {
                 <ResponsiveContainer width="100%" height={200}>
                   <LineChart data={history}>
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="time" />
-                    <YAxis domain={[35, 43]} />
-                    <Tooltip />
+                    <XAxis dataKey="time" tickFormatter={(value) => Math.round(value)} />
+                    <YAxis domain={[35, 43]} tickFormatter={(value) => value.toFixed(1)} />
+                    <Tooltip formatter={(value) => value.toFixed(1)} />
                     <ReferenceLine y={42} stroke="red" strokeDasharray="3 3" />
                     <Line type="monotone" dataKey="Temp" stroke="#f97316" dot={false} />
                   </LineChart>
@@ -439,9 +439,9 @@ export default function PhysiologyGame() {
                 <ResponsiveContainer width="100%" height={200}>
                   <LineChart data={history}>
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="time" />
-                    <YAxis domain={[70, 105]} />
-                    <Tooltip />
+                    <XAxis dataKey="time" tickFormatter={(value) => Math.round(value)} />
+                    <YAxis domain={[70, 105]} tickFormatter={(value) => Math.round(value)} />
+                    <Tooltip formatter={(value) => Math.round(value)} />
                     <ReferenceLine y={80} stroke="red" strokeDasharray="3 3" />
                     <Line type="monotone" dataKey="Hydration" stroke="#06b6d4" dot={false} />
                   </LineChart>

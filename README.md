@@ -10,7 +10,7 @@ This application is designed for biomedical engineering students, healthcare pro
 
 ### Opening the Repository in GitHub Codespaces
 
-1. Navigate to the repository on GitHub at `https://github.com/[your-username]/physiology-stabilizer-game`
+1. Navigate to the repository on GitHub at `https://github.com/[your-username]/BME-3053C-Final-Project`
 2. Click the green **"Code"** button at the top right of the repository
 3. Select the **"Codespaces"** tab in the dropdown menu
 4. Click **"Create codespace on main"** (or select an existing codespace if available)
@@ -22,7 +22,6 @@ This application is designed for biomedical engineering students, healthcare pro
 Once your Codespace is open, follow these commands in the integrated terminal:
 
 ```bash
-cd react-game
 npm install
 npm run dev
 ```
@@ -93,7 +92,7 @@ Once comfortable with basic controls:
 - Experiment with the Hard difficulty for rapid vital changes
 - Aim for high scores by extending stability time beyond minimum requirements
 
-## Data Description (Optional)
+## Data Description
 
 ### Physiological Model Source
 
@@ -129,35 +128,29 @@ This educational tool is provided for academic and training purposes. The physio
 ```
 BME-3053C-FINAL-PROJECT/
 │
-├── react-game/               # Main application directory
-│   │
-│   ├── src/                  # Source code directory
-│   │   ├── App.jsx          # Main application component containing:
-│   │   │                    #   - PatientModel class (physiological simulation engine)
-│   │   │                    #   - DIFFICULTY_SETTINGS (Easy/Medium/Hard parameters)
-│   │   │                    #   - PhysiologyGame component (UI and game logic)
-│   │   │                    #   - Real-time vital signs updates and visualization
-│   │   └── main.jsx         # React application entry point, renders App component
-│   │
-│   ├── index.html           # Main HTML entry point, loads Tailwind CSS and React app
-│   ├── package.json         # Node.js dependencies and scripts configuration
-│   ├── vite.config.js       # Vite bundler configuration for dev server
-│   └── .gitignore           # Git ignore file for node_modules and build files
+├── src/                     # Source code directory
+│   ├── App.jsx              # Main application component containing:
+│   │                        #   - PatientModel class (physiological simulation engine)
+│   │                        #   - DIFFICULTY_SETTINGS (Easy/Medium/Hard parameters)
+│   │                        #   - PhysiologyGame component (UI and game logic)
+│   │                        #   - Real-time vital signs updates and visualization
+│   └── main.jsx             # React application entry point, renders App component
 │
-├── README.md                # This file - project documentation
+├── index.html               # Main HTML entry point, loads Tailwind CSS and React app
+├── package.json             # Node.js dependencies and scripts configuration
+├── vite.config.js           # Vite bundler configuration for dev server
+├── .gitignore               # Git ignore file for node_modules and build files
 │
-└── (other project files)    # Additional project resources
+└── README.md                # This file - project documentation
 ```
 
 **Key Components**:
 
-- **`react-game/`**: Main application directory containing all game files
-
-- **`react-game/index.html`**: Minimal HTML shell that loads Tailwind CSS from CDN for styling and mounts the React application to the DOM
+- **`index.html`**: Minimal HTML shell that loads Tailwind CSS from CDN for styling and mounts the React application to the DOM
   
-- **`react-game/src/main.jsx`**: Initializes React and renders the root App component with StrictMode enabled for development warnings
+- **`src/main.jsx`**: Initializes React and renders the root App component with StrictMode enabled for development warnings
   
-- **`react-game/src/App.jsx`**: Contains the entire game logic including:
+- **`src/App.jsx`**: Contains the entire game logic including:
   - `DIFFICULTY_SETTINGS`: Object defining patient parameters for each difficulty level (age, thresholds, response rates)
   - `PatientModel` class: Implements the physiological simulation with methods for:
     - `update()`: Advances simulation by timestep, calculating heart rate, temperature, hydration, and blood pressure
@@ -170,9 +163,9 @@ BME-3053C-FINAL-PROJECT/
     - Four Recharts line graphs with critical threshold indicators
     - Score calculation and win/loss logic
   
-- **`react-game/package.json`**: Defines project dependencies (React 18, Recharts for graphing, Lucide-react for icons) and npm scripts (`dev`, `build`, `preview`)
+- **`package.json`**: Defines project dependencies (React 18, Recharts for graphing, Lucide-react for icons) and npm scripts (`dev`, `build`, `preview`)
 
-- **`react-game/vite.config.js`**: Configures Vite development server to run on all network interfaces (0.0.0.0) at port 3000, enabling access from Codespaces
+- **`vite.config.js`**: Configures Vite development server to run on all network interfaces (0.0.0.0) at port 3000, enabling access from Codespaces
 
 **Dependencies**:
 - **React 18**: Core UI framework for component-based architecture
